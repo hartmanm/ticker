@@ -1,0 +1,13 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /
+  static_files: 22mines/22mines.html
+  upload: 22mines/22mines.html
+
+- url: /(.*\.(png|jpg|jpeg|zip|jp2|css|js|html))$
+  static_files: 22mines/\1
+  upload: 22mines/.*\.(png|jpg|jpeg|zip|jp2|css|js|html)$

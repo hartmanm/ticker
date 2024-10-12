@@ -21,7 +21,6 @@ margin-top: 10px;
 grid-template-areas:
 "q";}
 .q {grid-area: q;}
-
 code{padding: 4px 4px; color: #0F5900; background-color: #CFF8CF; border-radius: 2px;}
 table {}
 td, th {padding: 4px; border-collapse: collapse}
@@ -48,8 +47,8 @@ td, th {padding: 4px; border-collapse: collapse}
 <div class="grid-container">
 <table align="center" style="margin-left: auto; margin-right:auto;" class="q">
 <tr><th><img src=src/bitcoin.png style="width:33px;height:33px;"></th>&nbsp<th><code id="btc"></code></th></tr>
-<tr><th><img src=src/bitcoincash.png style="width:33px;height:33px;"></th>&nbsp<th><code id="bch"></code></th></tr>
 <!-- 
+<tr><th><img src=src/bitcoincash.png style="width:33px;height:33px;"></th>&nbsp<th><code id="bch"></code></th></tr>
 <tr><th><img src=src/bitcoinsv.png style="width:33px;height:33px;"></th>&nbsp<th><code id="bsv"></code></th></tr>
 -->
 <tr><th><img src=src/ether.png style="width:33px;height:33px;"></th>&nbsp<th><code id="eth"></code></th></tr>
@@ -69,55 +68,54 @@ td, th {padding: 4px; border-collapse: collapse}
 </div>
 <div class="footer"><p></p></div>
 <script>
-// coin ticker
-var btc = 0;
-var itr;
-//var arr = ['btc', 'zec', 'etc', 'eth', 'xmr', 'ltc', 'bch', 'dash', 'bsv', 'rvn'];
-var arr = ['btc', 'etc', 'eth', 'xmr', 'ltc', 'bch', 'rvn'];
+let btc = 0;
+let itr;
+//let arr = ['btc', 'zec', 'etc', 'eth', 'xmr', 'ltc', 'bch', 'dash', 'bsv', 'rvn'];
+let arr = ['btc', 'etc', 'eth', 'xmr', 'ltc', 'rvn'];
 function shell(){for (i = 0; i < arr.length; i++){itr = arr[i]; getData(itr);}}
 shell();
 function refresh(){shell();}
-var timer = setInterval(refresh, 120000);
-var alt_itr;
-//var alt_arr = ['bitcoin', 'zcash', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'dash', 'bitcoin-sv', 'ravencoin'];
-var alt_arr = ['bitcoin', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'ravencoin'];
+let timer = setInterval(refresh, 120000);
+let alt_itr;
+//let alt_arr = ['bitcoin', 'zcash', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'dash', 'bitcoin-sv', 'ravencoin'];
+let alt_arr = ['bitcoin', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'ravencoin'];
 function alt_shell(){for (i = 0; i < alt_arr.length; i++){alt_itr = alt_arr[i]; itr = arr[i]; alt_getData(alt_itr, itr);}}
 alt_shell();
 function alt_refresh(){alt_shell();}
-var alt_timer = setInterval(alt_refresh, 120000);
+let alt_timer = setInterval(alt_refresh, 120000);
 function source_refresh(){choose_source();}
-var source_timer = setInterval(source_refresh, 120004);
+let source_timer = setInterval(source_refresh, 120004);
 setTimeout(choose_source, 4000);
 function choose_source(){
-var coin;
+let coin;
 for (i = 0; i < arr.length; i++){
 coin = arr[i]
-var v = parseFloat(document.getElementById(coin).value);
+let v = parseFloat(document.getElementById(coin).value);
 v = v.toFixed(2);
-var n = parseFloat(document.getElementById(coin).innerHTML);
+let n = parseFloat(document.getElementById(coin).innerHTML);
 n = n.toFixed(2);
 if(n == NaN || n == "NaN" || n == 0.00 || n == "0.00"){document.getElementById(coin).innerHTML = v;}
 }}
 function getData(coin){
 if( coin == "btc"){
-var url = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD";
+let url = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD";
 fetch(url).then(data => data.json()).then(data => {
-var n = data.last;
+let n = data.last;
 btc = n;
 document.getElementById(coin).value = n;})}
 else{
-var url = "https://shapeshift.io/rate/" + coin + "_btc";
+let url = "https://shapeshift.io/rate/" + coin + "_btc";
 fetch(url).then(data => data.json()).then(data => {
-var n = data.rate;
+let n = data.rate;
 n = btc * n;
 n = n.toFixed(2);
 document.getElementById(coin).value = n;
 })}}
 function alt_getData(coin, symbol){
-var url = "https://api.coincap.io/v2/assets/" + coin;
+let url = "https://api.coincap.io/v2/assets/" + coin;
 fetch(url).then(data => data.json()).then(data => {
-var a = data.data.priceUsd;
-var n = parseFloat(a);
+let a = data.data.priceUsd;
+let n = parseFloat(a);
 n = n.toFixed(2);
 document.getElementById(symbol).innerHTML = n;
 })};

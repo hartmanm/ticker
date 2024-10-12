@@ -47,17 +47,7 @@ td, th {padding: 4px; border-collapse: collapse}
 <div class="grid-container">
 <table align="center" style="margin-left: auto; margin-right:auto;" class="q">
 <tr><th><img src=src/bitcoin.png style="width:33px;height:33px;"></th>&nbsp<th><code id="btc"></code></th></tr>
-<!-- 
-<tr><th><img src=src/bitcoincash.png style="width:33px;height:33px;"></th>&nbsp<th><code id="bch"></code></th></tr>
-<tr><th><img src=src/bitcoinsv.png style="width:33px;height:33px;"></th>&nbsp<th><code id="bsv"></code></th></tr>
--->
 <tr><th><img src=src/ether.png style="width:33px;height:33px;"></th>&nbsp<th><code id="eth"></code></th></tr>
-<!-- 
-<tr><th><img src=src/dash.png style="width:33px;height:33px;"></th>&nbsp<th><code id="dash"></code></th></tr>
--->
-<!-- 
-<tr><th><img src=src/zcash.png style="width:33px;height:33px;"></th>&nbsp<th><code id="zec"></code></th></tr>
--->
 <tr><th><img src=src/monero.png style="width:33px;height:33px;"></th>&nbsp<th><code id="xmr"></code></th></tr>
 <tr><th><img src=src/litecoin.png style="width:33px;height:33px;"></th>&nbsp<th><code id="ltc"></code></th></tr>
 <tr><th><img src=src/etherclassic.png style="width:33px;height:33px;"></th>&nbsp<th><code id="etc"></code></th></tr>
@@ -70,15 +60,13 @@ td, th {padding: 4px; border-collapse: collapse}
 <script>
 let btc = 0;
 let itr;
-//let arr = ['btc', 'zec', 'etc', 'eth', 'xmr', 'ltc', 'bch', 'dash', 'bsv', 'rvn'];
 let arr = ['btc', 'etc', 'eth', 'xmr', 'ltc', 'rvn'];
+let alt_arr = ['bitcoin', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'ravencoin'];
 function shell(){for (i = 0; i < arr.length; i++){itr = arr[i]; getData(itr);}}
 shell();
 function refresh(){shell();}
 let timer = setInterval(refresh, 120000);
 let alt_itr;
-//let alt_arr = ['bitcoin', 'zcash', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'dash', 'bitcoin-sv', 'ravencoin'];
-let alt_arr = ['bitcoin', 'ethereum-classic', 'ethereum', 'monero', 'litecoin', 'bitcoin-cash', 'ravencoin'];
 function alt_shell(){for (i = 0; i < alt_arr.length; i++){alt_itr = alt_arr[i]; itr = arr[i]; alt_getData(alt_itr, itr);}}
 alt_shell();
 function alt_refresh(){alt_shell();}
@@ -88,7 +76,7 @@ let source_timer = setInterval(source_refresh, 120004);
 setTimeout(choose_source, 4000);
 function choose_source(){
 let coin;
-for (i = 0; i < arr.length; i++){
+for(i = 0; i < arr.length; i++){
 coin = arr[i]
 let v = parseFloat(document.getElementById(coin).value);
 v = v.toFixed(2);
@@ -97,7 +85,7 @@ n = n.toFixed(2);
 if(n == NaN || n == "NaN" || n == 0.00 || n == "0.00"){document.getElementById(coin).innerHTML = v;}
 }}
 function getData(coin){
-if( coin == "btc"){
+if(coin == "btc"){
 let url = "https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD";
 fetch(url).then(data => data.json()).then(data => {
 let n = data.last;
@@ -105,7 +93,7 @@ btc = n;
 document.getElementById(coin).value = n;})}
 else{
 let url = "https://shapeshift.io/rate/" + coin + "_btc";
-fetch(url).then(data => data.json()).then(data => {
+fetch(url).then(data => data.json()).then(data =>{
 let n = data.rate;
 n = btc * n;
 n = n.toFixed(2);
@@ -113,7 +101,7 @@ document.getElementById(coin).value = n;
 })}}
 function alt_getData(coin, symbol){
 let url = "https://api.coincap.io/v2/assets/" + coin;
-fetch(url).then(data => data.json()).then(data => {
+fetch(url).then(data => data.json()).then(data =>{
 let a = data.data.priceUsd;
 let n = parseFloat(a);
 n = n.toFixed(2);
